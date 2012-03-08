@@ -1,0 +1,14 @@
+% layout 'default';
+% title 'users';
+<ul>
+% for my $user (@$userlist){
+<li> <%= $user->{username} %> </li>
+<ul>
+    <li> uid: <%= $user->{uid} %> </li>
+    <li> gid: <%= $user->{gid} %> </li>
+    <li> comment: <%= $user->{comment} %> </li>
+    <li> home: <%= $user->{home} %> </li>
+    <li> shell: <%= $user->{shell} %> </li>
+</ul>
+% }
+</ul>

@@ -1,0 +1,4 @@
+% layout 'default';
+% title 'users';
+adding user with: <br />
+%= $useradd

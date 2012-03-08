@@ -1,0 +1,8 @@
+% layout 'default';
+% title 'Login';
+%= t h2 => $message
+%= form_for '/auth' => ( method => 'post' ) => begin
+    Username: <%= text_field 'username' %>
+    Password: <%= password_field 'password' %>
+    %= submit_button 'Log in'
+%= end

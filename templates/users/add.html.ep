@@ -1,0 +1,8 @@
+% layout 'default';
+% title 'users';
+%= flash 'message'
+%= form_for '/users/create' => (method => 'post') => begin
+    Username: <%= text_field 'username' %>
+    Type: <%= select_field 'type' => $config %>
+    %= submit_button 'Create User'
+%= end
