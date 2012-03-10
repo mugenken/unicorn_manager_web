@@ -1,17 +1,24 @@
 package Unicorn::Manager::Web::Users;
 use Mojo::Base 'Mojolicious::Controller';
 
+
 has user_config => sub {
     my $self = shift;
 
     return {
-        Rails => {
-            skel => '/etc/skel_rails',
-            database => 'postgres',
+        webapps => {
+            rails => {
+                skel => '/etc/skel_rails',
+                databases => ['postgres', 'mysql'],
+            },
+            wordpress => {
+                skel => '/etc/skel_php',
+                databases => ['mysql'],
+            },
         },
-        Wordpress => {
-            skel => '/etc/skel_php',
-            database => 'mysql',
+        databases => {
+            mysql => {},
+            postgres => {},
         },
     };
 };
@@ -51,7 +58,7 @@ sub add {
     my $self = shift;
 
     my $config = [];
-    for (keys %{$self->user_config}){
+    for (keys %{$self->user_config->{webapps}}){
         push @$config, $_;
     }
 
@@ -69,7 +76,7 @@ sub create {
         $self->redirect_to('/users/add');
     }
 
-    my $useradd = 'useradd -m -s /bin/bash -k ' . $self->user_config->{$type}->{skel} . ' ' . $username;
+    my $useradd = 'useradd -m -s /bin/bash -k ' . $self->user_config->{webapps}->{$type}->{skel} . ' ' . $username;
 
     $self->render('create', useradd => $useradd);
 

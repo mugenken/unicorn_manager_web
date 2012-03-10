@@ -1,8 +1,18 @@
 % layout 'default';
-% title 'Login';
-%= t h2 => $message
-%= form_for '/auth' => ( method => 'post' ) => begin
-    Username: <%= text_field 'username' %>
-    Password: <%= password_field 'password' %>
-    %= submit_button 'Log in'
-%= end
+% title 'users';
+<div id="main">
+    %= include 'elements/header'
+    <div id="site_content">
+        %= include 'elements/sidebar'
+        <div id="content">
+            <div class="flash"><%= flash 'message' %></div>
+            %= t h2 => $message
+            %= form_for '/auth' => ( method => 'post' ) => begin
+                Username: <%= text_field 'username' %>
+                Password: <%= password_field 'password' %>
+                %= submit_button 'Log in'
+            %= end
+        </div>
+    </div>
+    %= include 'elements/footer'
+</div>

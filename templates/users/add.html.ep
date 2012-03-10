@@ -1,8 +1,17 @@
 % layout 'default';
 % title 'users';
-%= flash 'message'
-%= form_for '/users/create' => (method => 'post') => begin
-    Username: <%= text_field 'username' %>
-    Type: <%= select_field 'type' => $config %>
-    %= submit_button 'Create User'
-%= end
+<div id="main">
+    %= include 'elements/header'
+    <div id="site_content">
+        %= include 'elements/sidebar'
+        <div id="content">
+            <div class="flash"><%= flash 'message' %></div>
+            %= form_for '/users/create' => (method => 'post', class => 'unboxed') => begin
+                Username: <%= text_field 'username', class => 'subscribe' %>
+                Type: <%= select_field 'type' => $config, class => 'subscribe' %>
+                %= submit_button 'Create User', class => 'subscribe', id => 'subscribe'
+            %= end
+        </div>
+    </div>
+    %= include 'elements/footer'
+</div>

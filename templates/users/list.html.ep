@@ -1,14 +1,23 @@
 % layout 'default';
 % title 'users';
-<ul>
-% for my $user (@$userlist){
-<li> <%= $user->{username} %> </li>
-<ul>
-    <li> uid: <%= $user->{uid} %> </li>
-    <li> gid: <%= $user->{gid} %> </li>
-    <li> comment: <%= $user->{comment} %> </li>
-    <li> home: <%= $user->{home} %> </li>
-    <li> shell: <%= $user->{shell} %> </li>
-</ul>
-% }
-</ul>
+<div id="main">
+    %= include 'elements/header'
+    <div id="site_content">
+        %= include 'elements/sidebar'
+        <div id="content">
+            <ul>
+            % for my $user (@$userlist){
+                <li> <%= $user->{username} %> </li>
+                <ul>
+                    <li> uid: <%= $user->{uid} %> </li>
+                    <li> gid: <%= $user->{gid} %> </li>
+                    <li> comment: <%= $user->{comment} %> </li>
+                    <li> home: <%= $user->{home} %> </li>
+                    <li> shell: <%= $user->{shell} %> </li>
+                </ul>
+            % }
+            </ul>
+        </div>
+    </div>
+    %= include 'elements/footer'
+</div>

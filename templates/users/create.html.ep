@@ -1,4 +1,13 @@
 % layout 'default';
 % title 'users';
-adding user with: <br />
-%= $useradd
+<div id="main">
+    %= include 'elements/header'
+    <div id="site_content">
+        %= include 'elements/sidebar'
+        <div id="content">
+            adding user with: <br />
+            %= $useradd
+        </div>
+    </div>
+    %= include 'elements/footer'
+</div>

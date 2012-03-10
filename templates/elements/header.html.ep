@@ -1,0 +1,7 @@
+<div id="header">
+    <div id="logo">
+        <h1><a href="http://search.cpan.org/perldoc?Unicorn::Manager">Unicorn::Manager</a></h1>
+        <div class="slogan">Manage your unicorns! Isn't that great?!</div>
+    </div>
+    %= include 'elements/menubar'
+</div>
