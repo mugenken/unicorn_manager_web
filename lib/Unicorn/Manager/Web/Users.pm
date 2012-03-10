@@ -1,5 +1,6 @@
 package Unicorn::Manager::Web::Users;
 use Mojo::Base 'Mojolicious::Controller';
+use JSON;
 
 
 has user_config => sub {
@@ -38,17 +39,23 @@ sub list {
     close $fh;
 
     my @users = ();
+    my $running_unicorns = JSON::decode_json(qx[uc.pl json]);
 
     for (@list){
         my ($username, undef, $uid, $gid, $comment, $home, $shell) = split ':', $_;
-        push @users, {
+        my $user = {
             username => $username,
             uid => $uid,
             gid => $gid,
             comment => $comment,
             home => $home,
             shell => $shell,
-        } if $uid > 500 && $username ne 'nobody';
+            unicorn => 'no unicorn running',
+        };
+        if ($running_unicorns->{$username}){
+            $user->{unicorn} = 'has unicorn running';
+        }
+        push @users, $user if $uid > 500 && $username ne 'nobody';
     }
 
     $self->render('list', userlist => [@users]);

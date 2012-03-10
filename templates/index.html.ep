@@ -6,6 +6,7 @@
         %= include 'elements/sidebar'
         <div id="content">
             <div class="flash"><%= flash 'message' %></div>
+            <div class="stash"><%= stash 'message' %></div>
         </div>
     </div>
     %= include 'elements/footer'

@@ -2,6 +2,26 @@ package Unicorn::Manager::Web;
 use Mojo::Base 'Mojolicious';
 use Mojolicious::Plugin::Authentication;
 use String::Random;
+use YAML;
+
+has passwd => sub {
+    my $self = shift;
+    # YAML file like this
+    #
+    #---
+    #  login_name:
+    #    name: username
+    #    password: secret
+    #  john:
+    #    name: John Doe
+    #    password: password
+    #
+    my $passwd = $ENV{HOME} . '/passfile';
+
+    my $users = YAML::LoadFile($passwd);
+
+    return $users;
+};
 
 # This method will run once at server start
 sub startup {
@@ -22,13 +42,7 @@ sub startup {
                 my $self = shift;
                 my $uid = shift;
 
-                my $users = {
-                    admin => {
-                        username => 'Admin',
-                        password => 'test123',
-                        name     => 'Mak Simal',
-                    },
-                };
+                my $users = Unicorn::Manager::Web->passwd;
 
                 return $users->{$uid} || undef;
             },
@@ -37,16 +51,18 @@ sub startup {
                 my $uid  = shift;
                 my $pass = shift;
 
-                return 'admin' if $uid eq 'Admin' && $pass eq 'test123';
+                my $users = Unicorn::Manager::Web->passwd;
+
+                return $uid if exists $users->{$uid} && $pass eq $users->{$uid}->{password};
             },
         }
     );
 
     # Normal route to controller
-    $r->route('/welcome')->to('admin#welcome');
-    $r->route('/auth')->to('admin#auth');
-    $r->route('/login')->to('admin#login');
-    $r->route('/logout')->to('admin#leave');
+    $r->route('/')->to('site#index');
+    $r->route('/auth')->to('site#auth');
+    $r->route('/login')->to('site#login');
+    $r->route('/logout')->to('site#leave');
 
     $r->route('/users/:action')->over(authenticated => 1)->to( controller => 'users' );
 }

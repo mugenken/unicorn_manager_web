@@ -1,3 +1,4 @@
+% if (0){
 <div id="sidebar_container">
     <img class="paperclip" src="/style/paperclip.png" alt="paperclip" />
     <div class="sidebar">
@@ -24,3 +25,4 @@
         <p>We have just launched our new website. Take a look around, we'd love to know what you think.....<br /><a href="#">read more</a></p>
     </div>
 </div>
+% }
